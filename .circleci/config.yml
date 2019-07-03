@@ -6,6 +6,9 @@ version: 2
 jobs:
   build:
     <<: *terraform
+    environment:
+      TF_CLI_ARGS_plan: -input=false -lock=false
+      TF_CLI_ARGS_init: -input=false -upgrade=true -reconfigure
     steps:
       - checkout
       - run:
@@ -13,25 +16,21 @@ jobs:
           command: terraform fmt -diff -check -recursive
       - run:
           name: init shared
-          working_directory: shared
-          command: terraform init
+          command: terraform init shared
       - run:
           name: plan shared
-          working_directory: shared
           environment:
             TF_WORKSPACE: development
-          command: terraform plan -input=false -lock=false
+          command: terraform plan -var-file=shared/terraform.tfvars.json shared
       - run:
           name: init environment
-          working_directory: environment
-          command: terraform init
+          command: terraform init environment
       - run:
           name: plan environment
-          working_directory: environment
           environment:
             TF_WORKSPACE: master
             TF_VAR_OPG_DOCKER_TAG: dummy_value
-          command: terraform plan -input=false -lock=false
+          command: terraform plan -var-file=environment/terraform.tfvars.json environment
 
 workflows:
   version: 2

@@ -2,17 +2,18 @@ variable "default_role" {
   default = "digideps-ci"
 }
 
-variable "environments" {
+variable "accounts" {
   type = map(
     object({
-      account_id        = string
-      cloudtrail_bucket = string
+      account_id            = string
+      cloudtrail_bucket     = string
+      cloudformation_bucket = string
     })
   )
 }
 
 locals {
-  environment = var.environments[terraform.workspace]
+  account = var.accounts[terraform.workspace]
 
   default_tags = {
     business-unit          = "OPG"

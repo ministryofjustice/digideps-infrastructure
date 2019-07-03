@@ -1,5 +1,5 @@
 resource "aws_s3_bucket" "cloudtrail" {
-  bucket = local.environment.cloudtrail_bucket
+  bucket = local.account.cloudtrail_bucket
 
   tags = local.default_tags
 }
