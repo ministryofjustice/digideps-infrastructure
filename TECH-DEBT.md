@@ -1,8 +1,8 @@
 #TODO:
 - Establish regular check of Trusted Advisor
 - Configure correct email address for Trusted Advisor
-- Manage SES config with terraform
 - Manage service certificate with terraform
+- Manage service SES config with terraform
 - move preproduction to separate account
 - remove develop environment
 - rename feature-105 -> feature3
